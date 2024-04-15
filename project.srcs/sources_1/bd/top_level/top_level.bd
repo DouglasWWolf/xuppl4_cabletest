@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0x950735C16E63D00B",
+      "boundary_crc": "0xE58AABD5C1EF203F",
       "device": "xcvu3p-ffvc1517-2-e",
       "gen_directory": "../../../../project.gen/sources_1/bd/top_level",
       "name": "top_level",
@@ -41,7 +41,8 @@
         "cabletest_ctl": ""
       },
       "cmac_cdc": "",
-      "smartconnect": ""
+      "smartconnect": "",
+      "status_leds": ""
     },
     "interface_ports": {
       "pcie_refclk": {
@@ -116,11 +117,15 @@
       }
     },
     "ports": {
-      "qsfp1_up": {
-        "direction": "O"
+      "led_green_l": {
+        "direction": "O",
+        "left": "3",
+        "right": "0"
       },
-      "qsfp0_up": {
-        "direction": "O"
+      "led_orange_l": {
+        "direction": "O",
+        "left": "3",
+        "right": "0"
       }
     },
     "components": {
@@ -3413,6 +3418,35 @@
             }
           }
         }
+      },
+      "status_leds": {
+        "vlnv": "xilinx.com:module_ref:status_leds:1.0",
+        "xci_name": "top_level_status_leds_0_0",
+        "xci_path": "ip/top_level_status_leds_0_0/top_level_status_leds_0_0.xci",
+        "inst_hier_path": "status_leds",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "status_leds",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "qsfp0_up": {
+            "direction": "I"
+          },
+          "qsfp1_up": {
+            "direction": "I"
+          },
+          "led_green_l": {
+            "direction": "O",
+            "left": "3",
+            "right": "0"
+          },
+          "led_orange_l": {
+            "direction": "O",
+            "left": "3",
+            "right": "0"
+          }
+        }
       }
     },
     "interface_nets": {
@@ -3535,8 +3569,8 @@
       "eth_0_stat_rx_aligned_0": {
         "ports": [
           "eth_0/aligned",
-          "qsfp0_up",
-          "cmac_cdc/cmac0_aligned"
+          "cmac_cdc/cmac0_aligned",
+          "status_leds/qsfp0_up"
         ]
       },
       "eth_0_stream_clk": {
@@ -3554,8 +3588,8 @@
       "eth_1_stat_rx_aligned_0": {
         "ports": [
           "eth_1/aligned",
-          "qsfp1_up",
-          "cmac_cdc/cmac1_aligned"
+          "cmac_cdc/cmac1_aligned",
+          "status_leds/qsfp1_up"
         ]
       },
       "eth_1_stream_clk": {
@@ -3586,6 +3620,18 @@
           "cabletest/resetn",
           "cmac_cdc/user_resetn",
           "smartconnect/aresetn"
+        ]
+      },
+      "status_leds_led_green_l": {
+        "ports": [
+          "status_leds/led_green_l",
+          "led_green_l"
+        ]
+      },
+      "status_leds_led_orange_l": {
+        "ports": [
+          "status_leds/led_orange_l",
+          "led_orange_l"
         ]
       }
     },
