@@ -5,6 +5,8 @@
 //   Date     Who   Ver  Changes
 //====================================================================================
 // 01-Dec-23  DWW     1  Initial creation
+//
+// 15-Apr-24  DWW     2  Added support for BYTES_PER_USEC
 //====================================================================================
 
 /*
@@ -62,7 +64,10 @@ module cabletest_ctl
     output reg[7:0] CYCLES_PER_PACKET, 
     
     // Number of packets that should be transmitted
-    output reg[63:0] PACKET_COUNT
+    output reg[63:0] PACKET_COUNT,
+    
+    // Rate of the output data
+    output reg[31:0] BYTES_PER_USEC
 
     //==========================================================================    
 );  
@@ -93,15 +98,17 @@ module cabletest_ctl
 
     localparam REG_CONTROL           = 15;
     localparam REG_ETH_STATUS        = 16;
+    localparam REG_BYTES_PER_USEC    = 17;
     //==========================================================================
 
+    localparam DEFAULT_BYTES_PER_USEC = 12160;
 
     //==========================================================================
     // We'll communicate with the AXI4-Lite Slave core with these signals.
     //==========================================================================
     // AXI Slave Handler Interface for write requests
     wire[31:0]  ashi_waddr;     // Input:  Write-address
-    wire[31:0]  ashi_windx;     // Input:  Write-register index
+    wire[31:0]  ashi_windx;     // Input:  Write-index
     wire[31:0]  ashi_wdata;     // Input:  Write-data
     wire        ashi_write;     // Input:  1 = Handle a write request
     reg[1:0]    ashi_wresp;     // Output: Write-response (OKAY, DECERR, SLVERR)
@@ -109,7 +116,7 @@ module cabletest_ctl
 
     // AXI Slave Handler Interface for read requests
     wire[31:0]  ashi_raddr;     // Input:  Read-address
-    wire[31:0]  ashi_rindx;     // Input:  Read-register index
+    wire[31:0]  ashi_rindx;     // Input:  Read-index
     wire        ashi_read;      // Input:  1 = Handle a read request
     reg[31:0]   ashi_rdata;     // Output: Read data
     reg[1:0]    ashi_rresp;     // Output: Read-response (OKAY, DECERR, SLVERR);
@@ -189,6 +196,7 @@ module cabletest_ctl
             axi4_write_state  <= 0;
             PACKET_COUNT      <= 0;
             CYCLES_PER_PACKET <= 16;
+            BYTES_PER_USEC    <= DEFAULT_BYTES_PER_USEC;
 
         // If we're not in reset, and a write-request has occured...        
         end else case (axi4_write_state)
@@ -223,6 +231,9 @@ module cabletest_ctl
                             inject2 <= ashi_wdata[1];
                             halt    <= ashi_wdata[2];
                         end
+                        
+                    REG_BYTES_PER_USEC:
+                        BYTES_PER_USEC <= ashi_wdata;
 
                     // Writes to any other register are a decode-error
                     default: ashi_wresp <= DECERR;
@@ -272,6 +283,7 @@ module cabletest_ctl
                 REG_ERRORS1:            ashi_rdata <= errors1;
                 REG_ERRORS2:            ashi_rdata <= errors2;
                 REG_ETH_STATUS:         ashi_rdata <= eth_status;
+                REG_BYTES_PER_USEC:     ashi_rdata <= BYTES_PER_USEC;
                 
                 // Reads of any other register are a decode-error
                 default: ashi_rresp <= DECERR;
@@ -309,7 +321,7 @@ module cabletest_ctl
     //==========================================================================
     // This connects us to an AXI4-Lite slave core
     //==========================================================================
-    axi4_lite_slave #(.ADDR_MASK(ADDR_MASK)) axi_slave 
+    axi4_lite_slave axi_slave
     (
         .clk            (clk),
         .resetn         (resetn),
@@ -361,3 +373,4 @@ module cabletest_ctl
 
 
 endmodule
+

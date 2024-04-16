@@ -58,7 +58,7 @@ if [ $need_bitstream -eq 1 ]; then
 
     # Load the main bitstream
     echo "Loading cabletest bitstream..."
-    load_bitstream -hot_reset indy_cabletest.bit 10.11.12.2:3121
+    load_bitstream -hot_reset xuppl4_cabletest.bit 10.11.12.2:3121
     test $? -eq 0 || exit 1
 
     # Load the loopback bitstream
