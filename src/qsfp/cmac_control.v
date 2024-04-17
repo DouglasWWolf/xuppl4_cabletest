@@ -6,7 +6,7 @@
 //===================================================================================================
 // 29-Feb-23  DWW     1  Initial creation
 //
-// 16-Apr-24  DWW     2  Added gtwiz_reset_rx control
+// 16-Apr-24  DWW     2  sys_reset_out
 //===================================================================================================
 
 module cmac_control # (parameter RSFEC = 1, FREQ_HZ = 322265625)
@@ -38,7 +38,21 @@ module cmac_control # (parameter RSFEC = 1, FREQ_HZ = 322265625)
     input      stat_rx_aligned,
 
     // This is asserted to drive the reset input of the RX side of the transcievers
-    output     gtwiz_reset_rx
+    output     sys_reset_out,
+
+    // "axis_rx" from the CMAC connects here
+    input[511:0]  rx_in_tdata,
+    input[63:0]   rx_in_tkeep,
+    input         rx_in_tlast,
+    input         rx_in_tuser,
+    input         rx_in_tvalid,
+
+    // axis_rx output to the rest of the RTL application connects here
+    output[511:0] rx_out_tdata,
+    output[63:0]  rx_out_tkeep,
+    output        rx_out_tlast,
+    output        rx_out_tuser,
+    output        rx_out_tvalid
 );
 
 
@@ -61,8 +75,25 @@ assign ctl_rx_rsfec_enable_indication = RSFEC;
 assign ctl_tx_rsfec_enable            = RSFEC;
 //=============================================================================
 
-localparam ALIGNMENT_TIMEOUT = 3 * FREQ_HZ;
+// Various timeouts, measured in clock cycles
+localparam ALIGNMENT_TIMEOUT = 2 * FREQ_HZ;
 localparam RESET_TIMEOUT     = 50;
+localparam SILENCE_TIMEOUT   = FREQ_HZ / 1000;
+
+// Countdown timers
+reg[31:0] alignment_timer, reset_timer, silence_timer;
+
+//=============================================================================
+// AXI-Stream rx_out is driven directly from AXI-Stream rx_in
+//=============================================================================
+assign rx_out_tdata  = rx_in_tdata;
+assign rx_out_tkeep  = rx_in_tkeep;
+assign rx_out_tlast  = rx_in_tlast;
+assign rx_out_tuser  = rx_in_tuser;
+assign rx_out_tvalid = rx_in_tvalid & (silence_timer == 0);
+//=============================================================================
+
+
 
 // Synchronize "stat_rx_aligned" into "sync_rx_aligned"
 wire sync_rx_aligned;
@@ -81,11 +112,9 @@ cdc0
     .dest_out(sync_rx_aligned) 
 );
 
-// Countdown timers
-reg[31:0] alignment_timer, reset_timer;
 
 // The transceivers are in reset when the timer is non-zero
-assign gtwiz_reset_rx = (reset_timer != 0);
+assign sys_reset_out = (reset_timer != 0);
 
 
 //=============================================================================
@@ -96,27 +125,42 @@ assign gtwiz_reset_rx = (reset_timer != 0);
 reg[1:0] fsm_state = 0;
 always @(posedge clk) begin
 
-    // Manage the countdown timers
-    if (alignment_timer) alignment_timer <= alignment_timer - 1;
-    if (reset_timer    ) reset_timer     <= reset_timer - 1;
+    // Count down while waiting for PCS alignment
+    if (alignment_timer)
+        alignment_timer <= alignment_timer - 1;
+
+    // Count down while waiting for reset_out to complete
+    if (reset_timer)
+        reset_timer <= reset_timer - 1;
+
+    // Count down the timer that controls how long rx_out is silent after a reset
+    if (silence_timer)
+        silence_timer <= silence_timer - 1;
 
     case (fsm_state)
 
-        0:  begin
+        // If we're done resetting the CMAC, go wait for PCS alignment
+        0:  if (reset_timer == 0) begin
                 alignment_timer <= ALIGNMENT_TIMEOUT;
-                reset_timer     <= 0;
                 fsm_state       <= 1;
             end
 
-        1:  if (sync_rx_aligned)
-                alignment_timer <= ALIGNMENT_TIMEOUT;
-            else if (alignment_timer == 0) begin
-                reset_timer <= RESET_TIMEOUT;
-                fsm_state   <= 2;
+        // Wait for alignment to occur.  If we don't get PCS alignment
+        // before the timeout, reset the CMAC and try again
+        1:  if (sync_rx_aligned) begin
+                fsm_state     <= 2;
+            end else if (alignment_timer == 0) begin
+                silence_timer <= SILENCE_TIMEOUT;
+                reset_timer   <= RESET_TIMEOUT;
+                fsm_state     <= 0;
             end
 
-        2:  if (reset_timer == 0) fsm_state <= 0;
-
+        // If we lose alignment, reset the CMAC
+        2:  if (~sync_rx_aligned) begin
+                silence_timer <= SILENCE_TIMEOUT;
+                reset_timer   <= RESET_TIMEOUT;
+                fsm_state     <= 0;
+            end
     endcase
 end
 //=============================================================================
