@@ -78,16 +78,32 @@ set_property PACKAGE_PIN Ae34 [get_ports qsfp1_clk_clk_n]
 ##############################################
 ##########  QSFP Status & Control   ##########
 ##############################################
+#set_property -dict {PACKAGE_PIN AH25  IOSTANDARD LVCMOS18} [ get_ports fpga_i2c_master_l ]
+
+set_property -dict {PACKAGE_PIN AU24  IOSTANDARD LVCMOS18} [ get_ports qsfp_present_l[0] ]
+set_property -dict {PACKAGE_PIN AW23  IOSTANDARD LVCMOS18} [ get_ports qsfp_present_l[1] ]
+
+set_property -dict {PACKAGE_PIN AW26  IOSTANDARD LVCMOS18} [ get_ports qsfp_rst_l[0] ]
+set_property -dict {PACKAGE_PIN AU27  IOSTANDARD LVCMOS18} [ get_ports qsfp_rst_l[1] ]
+
+set_property -dict {PACKAGE_PIN AV26  IOSTANDARD LVCMOS18} [ get_ports qsfp_lp[0] ]
+set_property -dict {PACKAGE_PIN AT27  IOSTANDARD LVCMOS18} [ get_ports qsfp_lp[1] ]
+
+
 #set_property IOSTANDARD LVCMOS18 [get_ports fpga_i2c_master_l]
-#set_property PACKAGE_PIN AH25 [get_ports fpga_i2c_master_l]
+#set_property PACKAGE_PIN AH25    [get_ports fpga_i2c_master_l]
+
 #set_property IOSTANDARD LVCMOS18 [get_ports qsfp_rst_l_1]
+#set_property PACKAGE_PIN AW26    [get_ports qsfp_rst_l_1]
+
 #set_property IOSTANDARD LVCMOS18 [get_ports qsfp_rst_l_2]
-#set_property PACKAGE_PIN AW26 [get_ports qsfp_rst_l_1]
-#set_property PACKAGE_PIN AU27 [get_ports qsfp_rst_l_2]
+#set_property PACKAGE_PIN AU27    [get_ports qsfp_rst_l_2]
+
 #set_property IOSTANDARD LVCMOS18 [get_ports qsfp_lp_1]
+#set_property PACKAGE_PIN AV26    [get_ports qsfp_lp_1]
+
 #set_property IOSTANDARD LVCMOS18 [get_ports qsfp_lp_2]
-#set_property PACKAGE_PIN AV26 [get_ports qsfp_lp_1]
-#set_property PACKAGE_PIN AT27 [get_ports qsfp_lp_2]
+#set_property PACKAGE_PIN AT27    [get_ports qsfp_lp_2]
 
 ##############################################
 ##########           LEDs           ##########
