@@ -1,19 +1,11 @@
 #==============================================================================
-#  Date      Vers  Who  Description
+#  Date      Vers   Who  Description
 # -----------------------------------------------------------------------------
-# 06-Dec-23  1.00  DWW  Initial Creation
+# 06-Dec-23  1.0.0  DWW  Initial Creation
+# 05-May-24  1.1.0  DWW  Brought up to modern standard
 #==============================================================================
-CABLETEST_API_VERSION=1.00
+CABLETEST_API_VERSION=1.1.0
 
-
-#==============================================================================
-# This calls the local copy of pcireg
-#==============================================================================
-pcireg()
-{
-    ./pcireg $1 $2 $3 $4 $5 $6
-}
-#==============================================================================
 
 #==============================================================================
 # AXI register definitions
@@ -78,17 +70,7 @@ lower32()
 #==============================================================================
 read_reg()
 {
-    # Capture the value of the AXI register
-    text=$(pcireg $1)
-
-    # Extract just the first word of that text
-    text=($text)
-
-    # Convert the text into a number
-    value=$((text))
-
-    # Hand the value to the caller
-    echo $value
+    pcireg -dec $1
 }
 #==============================================================================
 
@@ -113,35 +95,33 @@ read_reg64()
         lsw=$(read_reg $lo_reg)
     fi
 
-    echo $(((msw << 32) | lsw))
+    echo $(( (msw << 32) | lsw ))
 }
 #==============================================================================
 
 
 #==============================================================================
-# Displays 1 if bitstream is loaded, otherwise displays "0"
+# This confirms that we have the correct RTL loaded into the FPGA
 #==============================================================================
-is_bitstream_loaded()
+confirm_rtl()
 {
-    reg=$(read_reg $REG_MODULE_REV)
-    test $reg -ne $((0xFFFFFFFF)) && echo "1" || echo "0"
+    local REG_RTL_TYPE=20
+
+    # Read the RTL_TYPE register
+    local rtl_type=$(read_reg $REG_RTL_TYPE)
+
+    # If it's 0xFFFF_FFFF, we need to re-enumerate the PCI bus
+    if [ $rtl_type -eq $((0xFFFFFFFF)) ]; then
+        echo "Re-enumerating PCI bus..." 1>&2
+        hot_reset 1>/dev/null 2>/dev/null
+        rtl_type=$(read_reg $REG_RTL_TYPE)
+    fi
+
+    # echo a "1" for pass or a "0" for fail
+    test "$rtl_type" == "741776" && echo "1" || echo "0"
 }
 #==============================================================================
 
-
-#==============================================================================
-# Loads the bitstream into the FPGA
-#
-# Returns 0 on success, non-zero on failure
-#==============================================================================
-load_bitstream()
-{
-    ./load_bitstream $1 $2 $3  1>&2
-    local rc=$?
-    rm -rf .Xil/vivado_lab*
-    return $rc
-}
-#==============================================================================
 
 
 #==============================================================================
