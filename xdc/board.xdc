@@ -15,11 +15,12 @@ set_property BITSTREAM.CONFIG.SPI_FALL_EDGE YES [current_design]
 ##########      Clocks/Reset        ##########
 ##############################################
 
+
 #
-# 100 MHz system clock 
+# 100 MHz system clock
 #
-#set_property -dict {PACKAGE_PIN AJ28 IOSTANDARD LVCMOS18} [get_ports init_clk]
-#create_clock -period 10.000 [get_ports init_clk]
+set_property -dict {PACKAGE_PIN AJ28 IOSTANDARD LVCMOS18} [get_ports init_clk]
+create_clock -period 10.000 [get_ports init_clk]
 
 
 #

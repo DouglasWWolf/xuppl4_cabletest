@@ -30,12 +30,12 @@ if [ "$gigabytes" == "" ] || [ -z $gigabytes ]; then
     exit 1
 fi
 
-# If we don't have the bitstream loaded, we need to load it
-if [ $(confirm_rtl) -eq 0 ]; then
-    need_bitstream=1
+# Is the bitstream not yet loaded?
+test $(is_bitstream_loaded) -eq 0 && need_bitstream=1
 
-# Otherwise, if we <do> already have the bitstream loaded...
-else
+# If we already have a the bitstream loaded...
+if [ $(is_bitstream_loaded) -eq 1 ]; then
+
     # If there were a large number of previous errors, we're
     # going to force a reload of the bitstreams
     error_count1=$(get_errors 1)
@@ -58,14 +58,17 @@ if [ $need_bitstream -eq 1 ]; then
 
     # Load the main bitstream
     echo "Loading cabletest bitstream..."
-    source ./load_bitstream.sh
+    ./load_bitstream.sh
     test $? -eq 0 || exit 1
-    
+
     # Wait a moment for PCS lock to occur
     sleep 3
     echo "Bitstream loaded"
 fi
 
+
+# Tell the world which version we are
+echo "indy_cabletest RTL version" $(get_rtl_version)
 
 # Display error message if we don't have PCS lock on the QSFP ports
 have_pcs=1

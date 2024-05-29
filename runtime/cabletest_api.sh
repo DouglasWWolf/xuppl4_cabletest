@@ -1,10 +1,10 @@
 #==============================================================================
-#  Date      Vers   Who  Description
+#  Date       Vers  Who  Description
 # -----------------------------------------------------------------------------
 # 06-Dec-23  1.0.0  DWW  Initial Creation
-# 05-May-24  1.1.0  DWW  Brought up to modern standard
+# 28-Feb-24  1.2.0  DWW  Now assuming the existence of /opt/fpga_runtime
 #==============================================================================
-CABLETEST_API_VERSION=1.1.0
+CABLETEST_API_VERSION=1.2.0
 
 
 #==============================================================================
@@ -70,7 +70,17 @@ lower32()
 #==============================================================================
 read_reg()
 {
+    # Capture the value of the AXI register
     pcireg -dec $1
+
+    # Extract just the first word of that text
+    #$text=($text)
+
+    # Convert the text into a number
+    #value=$((text))
+
+    # Hand the value to the caller
+    #echo $value
 }
 #==============================================================================
 
@@ -95,30 +105,33 @@ read_reg64()
         lsw=$(read_reg $lo_reg)
     fi
 
-    echo $(( (msw << 32) | lsw ))
+    echo $(((msw << 32) | lsw))
 }
 #==============================================================================
 
 
 #==============================================================================
-# This confirms that we have the correct RTL loaded into the FPGA
+# Displays the version of the RTL bitstream
 #==============================================================================
-confirm_rtl()
+get_rtl_version()
 {
-    local REG_RTL_TYPE=20
+    local major=$(read_reg 0)
+    local minor=$(read_reg 4)
+    local revis=$(read_reg 8)
+    echo ${major}.${minor}.${revis}
+}
+#==============================================================================
 
-    # Read the RTL_TYPE register
-    local rtl_type=$(read_reg $REG_RTL_TYPE)
 
-    # If it's 0xFFFF_FFFF, we need to re-enumerate the PCI bus
-    if [ $rtl_type -eq $((0xFFFFFFFF)) ]; then
-        echo "Re-enumerating PCI bus..." 1>&2
-        hot_reset 1>/dev/null 2>/dev/null
-        rtl_type=$(read_reg $REG_RTL_TYPE)
-    fi
 
-    # echo a "1" for pass or a "0" for fail
-    test "$rtl_type" == "741776" && echo "1" || echo "0"
+
+#==============================================================================
+# Displays 1 if bitstream is loaded, otherwise displays "0"
+#==============================================================================
+is_bitstream_loaded()
+{
+    reg=$(read_reg $REG_MODULE_REV)
+    test $reg -ne $((0xFFFFFFFF)) && echo "1" || echo "0"
 }
 #==============================================================================
 

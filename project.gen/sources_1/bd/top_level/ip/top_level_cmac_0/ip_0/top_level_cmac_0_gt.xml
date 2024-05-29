@@ -14,7 +14,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:da3e0ba8</spirit:value>
+            <spirit:value>9:61990920</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1407,13 +1407,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="16">0x0000</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpaddr_common_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpaddr_common_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -1433,13 +1433,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="1">0x0</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpclk_common_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpclk_common_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -1459,13 +1459,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="16">0x0000</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpdi_common_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpdi_common_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -1485,13 +1485,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="1">0x0</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpen_common_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpen_common_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -1511,13 +1511,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="1">0x0</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpwe_common_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpwe_common_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -3291,7 +3291,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpdo_common_out">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpdo_common_out">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -3317,7 +3317,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drprdy_common_out">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drprdy_common_out">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -4565,13 +4565,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="40">0x0000000000</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpaddr_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpaddr_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -4591,13 +4591,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="4">0x0</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.drpclk_in" xilinx:dependency="(spirit:decode(id(&apos;PARAM_VALUE.INTERNAL_UPDATE_IP_SYMBOL_drpclk_in&apos;)) and (spirit:decode(id(&apos;PARAM_VALUE.INTERNAL_PORT_ENABLEMENT_UPDATED&apos;)) > 0))">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.drpclk_in" xilinx:dependency="(spirit:decode(id(&apos;PARAM_VALUE.INTERNAL_UPDATE_IP_SYMBOL_drpclk_in&apos;)) and (spirit:decode(id(&apos;PARAM_VALUE.INTERNAL_PORT_ENABLEMENT_UPDATED&apos;)) > 0))">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -4617,13 +4617,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="64">0x0000000000000000</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpdi_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpdi_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -4643,13 +4643,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="4">0x0</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpen_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpen_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -4695,13 +4695,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="4">0x0</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpwe_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpwe_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -4964,13 +4964,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="4">0x0</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.eyescanreset_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.eyescanreset_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -4990,13 +4990,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="4">0x0</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.eyescantrigger_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.eyescantrigger_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -6778,13 +6778,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="4">0x0</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.rxdfelpmreset_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.rxdfelpmreset_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -7897,13 +7897,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="4">0xF</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.rxlpmen_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.rxlpmen_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -8736,13 +8736,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="4">0x0</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.rxpolarity_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.rxpolarity_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -8762,13 +8762,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="4">0x0</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.rxprbscntreset_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.rxprbscntreset_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -8788,13 +8788,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="16">0x0000</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.rxprbssel_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.rxprbssel_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -8868,13 +8868,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="12">0x000</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.rxrate_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.rxrate_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -9655,13 +9655,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="20">0xC6318</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txdiffctrl_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txdiffctrl_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -9943,13 +9943,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="4">0x0</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txinhibit_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txinhibit_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -10489,13 +10489,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="4">0x0</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txpippmen_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txpippmen_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -10567,13 +10567,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="4">0xF</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txpippmsel_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txpippmsel_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -10697,13 +10697,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="4">0x0</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txpolarity_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txpolarity_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -10723,13 +10723,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="20">0x00000</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txpostcursor_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txpostcursor_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -10776,13 +10776,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="4">0x0</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txprbsforceerr_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txprbsforceerr_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -10802,13 +10802,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="16">0x0000</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txprbssel_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txprbssel_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -10828,13 +10828,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="20">0x00000</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txprecursor_in">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txprecursor_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -11544,7 +11544,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpdo_out">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drpdo_out">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -11570,7 +11570,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drprdy_out">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.drprdy_out">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -11596,7 +11596,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.eyescandataerror_out">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.eyescandataerror_out">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -12121,7 +12121,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.rxbufstatus_out">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.rxbufstatus_out">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -13166,7 +13166,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.rxprbserr_out">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.rxprbserr_out">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -13350,7 +13350,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.rxresetdone_out">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.rxresetdone_out">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -13610,7 +13610,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txbufstatus_out">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txbufstatus_out">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -13979,7 +13979,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txresetdone_out">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txresetdone_out">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -14064,7 +14064,7 @@
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="signed">
         <spirit:name>C_FREERUN_FREQUENCY</spirit:name>
-        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_FREERUN_FREQUENCY">161.132812</spirit:value>
+        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_FREERUN_FREQUENCY">100</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_GT_TYPE</spirit:name>
@@ -16714,7 +16714,8 @@
       <spirit:name>ENABLE_OPTIONAL_PORTS</spirit:name>
       <spirit:displayName>Enable optional ports</spirit:displayName>
       <spirit:description>Indicate whether a port should be included</spirit:description>
-      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.ENABLE_OPTIONAL_PORTS" spirit:order="150">loopback_in gtwiz_reset_tx_datapath_in gtwiz_reset_rx_datapath_in rxrecclkout_out rxcdrhold_in rxdfelfhold_in gtpowergood_out txctrl0_in txctrl1_in rxctrl0_out rxctrl1_out</spirit:value>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.ENABLE_OPTIONAL_PORTS" spirit:order="150">loopback_in gtwiz_reset_tx_datapath_in gtwiz_reset_rx_datapath_in rxrecclkout_out gtpowergood_out rxdfelpmreset_in rxlpmen_in rxprbscntreset_in rxprbserr_out rxprbssel_in txprbssel_in rxresetdone_out txresetdone_out rxbufstatus_out drpaddr_in drpdi_in drpen_in drpwe_in drpdo_out drprdy_out drpclk_in txpostcursor_in txprecursor_in txdiffctrl_in eyescanreset_in eyescantrigger_in rxcdrhold_in rxdfelfhold_in txprbsforceerr_in txpolarity_in txinhibit_in txpippmen_in txpippmsel_in rxpolarity_in rxrate
+_in eyescandataerror_out txctrl0_in txctrl1_in rxctrl0_out rxctrl1_out drpaddr_common_in drpclk_common_in drpdi_common_in drpen_common_in drpwe_common_in drpdo_common_out drprdy_common_out txbufstatus_out</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>RX_REFCLK_SOURCE</spirit:name>
@@ -16864,7 +16865,7 @@
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>INTERNAL_UPDATE_IP_SYMBOL_drpclk_in</spirit:name>
-      <spirit:value spirit:format="bool" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_UPDATE_IP_SYMBOL_drpclk_in" spirit:order="169">false</spirit:value>
+      <spirit:value spirit:format="bool" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_UPDATE_IP_SYMBOL_drpclk_in" spirit:order="169">true</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -16960,7 +16961,7 @@
       <spirit:name>FREERUN_FREQUENCY</spirit:name>
       <spirit:displayName>Free-running and DRP clock frequency (MHz)</spirit:displayName>
       <spirit:description>Enter the frequency of the free-running clock used to bring up the core. For configurations which use the CPLL, this clock must also be used for the transceiver channel DRP interface</spirit:description>
-      <spirit:value spirit:format="float" spirit:resolve="user" spirit:id="PARAM_VALUE.FREERUN_FREQUENCY" spirit:order="178" spirit:minimum="3.125" spirit:maximum="250">161.132812</spirit:value>
+      <spirit:value spirit:format="float" spirit:resolve="user" spirit:id="PARAM_VALUE.FREERUN_FREQUENCY" spirit:order="178" spirit:minimum="3.125" spirit:maximum="250">100</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>INCLUDE_CPLL_CAL</spirit:name>

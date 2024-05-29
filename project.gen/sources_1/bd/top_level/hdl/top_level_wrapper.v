@@ -1,7 +1,7 @@
 //Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2021.1 (lin64) Build 3247384 Thu Jun 10 19:36:07 MDT 2021
-//Date        : Sun May  5 21:49:02 2024
+//Date        : Tue May 28 14:19:49 2024
 //Host        : simtool-5 running 64-bit Ubuntu 20.04.6 LTS
 //Command     : generate_target top_level_wrapper.bd
 //Design      : top_level_wrapper
@@ -10,7 +10,8 @@
 `timescale 1 ps / 1 ps
 
 module top_level_wrapper
-   (led_green_l,
+   (init_clk,
+    led_green_l,
     led_orange_l,
     pcie_mgt_rxn,
     pcie_mgt_rxp,
@@ -33,6 +34,7 @@ module top_level_wrapper
     qsfp_lp,
     qsfp_present_l,
     qsfp_rst_l);
+  input init_clk;
   output [3:0]led_green_l;
   output [3:0]led_orange_l;
   input [15:0]pcie_mgt_rxn;
@@ -57,6 +59,7 @@ module top_level_wrapper
   input [1:0]qsfp_present_l;
   output [1:0]qsfp_rst_l;
 
+  wire init_clk;
   wire [3:0]led_green_l;
   wire [3:0]led_orange_l;
   wire [15:0]pcie_mgt_rxn;
@@ -82,7 +85,8 @@ module top_level_wrapper
   wire [1:0]qsfp_rst_l;
 
   top_level top_level_i
-       (.led_green_l(led_green_l),
+       (.init_clk(init_clk),
+        .led_green_l(led_green_l),
         .led_orange_l(led_orange_l),
         .pcie_mgt_rxn(pcie_mgt_rxn),
         .pcie_mgt_rxp(pcie_mgt_rxp),
