@@ -1,1 +1,1 @@
-load_bitstream -hot_reset -config load_jtag.conf -part xcvu3p_0 -jtag_id $XUPPL4_JTAG_ID xuppl4_cabletest.bit
+load_bitstream -hot_reset -config load_jtag.conf -part xcvu3p_0 xuppl4_cabletest.bit

@@ -19,11 +19,11 @@
       },
       "eth_0": {
         "cmac": "",
-        "cmac_control": ""
+        "cmac_control_ex": ""
       },
       "eth_1": {
         "cmac": "",
-        "cmac_control": ""
+        "cmac_control_ex": ""
       },
       "cabletest": {
         "channel_0": {
@@ -437,6 +437,14 @@
           },
           "init_clk": {
             "direction": "I"
+          },
+          "rsfec_enable": {
+            "direction": "I"
+          },
+          "tx_pre": {
+            "direction": "I",
+            "left": "4",
+            "right": "0"
           }
         },
         "components": {
@@ -481,14 +489,14 @@
               }
             }
           },
-          "cmac_control": {
-            "vlnv": "xilinx.com:module_ref:cmac_control:1.0",
-            "xci_name": "top_level_cmac_control_0_0",
-            "xci_path": "ip/top_level_cmac_control_0_0/top_level_cmac_control_0_0.xci",
-            "inst_hier_path": "eth_0/cmac_control",
+          "cmac_control_ex": {
+            "vlnv": "xilinx.com:module_ref:cmac_control_ex:1.0",
+            "xci_name": "top_level_cmac_control_ex_0_0",
+            "xci_path": "ip/top_level_cmac_control_ex_0_0/top_level_cmac_control_ex_0_0.xci",
+            "inst_hier_path": "eth_0/cmac_control_ex",
             "reference_info": {
               "ref_type": "hdl",
-              "ref_name": "cmac_control",
+              "ref_name": "cmac_control_ex",
               "boundary_crc": "0x0"
             },
             "interface_ports": {
@@ -595,6 +603,14 @@
                   }
                 }
               },
+              "rsfec_enable": {
+                "direction": "I"
+              },
+              "tx_pre": {
+                "direction": "I",
+                "left": "4",
+                "right": "0"
+              },
               "rx_reset_out": {
                 "type": "rst",
                 "direction": "O",
@@ -627,6 +643,9 @@
               },
               "sync_rx_aligned": {
                 "direction": "O"
+              },
+              "sys_reset_out": {
+                "direction": "O"
               }
             }
           }
@@ -644,33 +663,33 @@
               "cmac/axis_rx"
             ]
           },
-          "cmac_control_ctl_rx": {
+          "cmac_control_ex_0_ctl_rx": {
             "interface_ports": [
-              "cmac_control/ctl_rx",
+              "cmac_control_ex/ctl_rx",
               "cmac/ctl_rx"
             ]
           },
-          "cmac_control_ctl_tx": {
+          "cmac_control_ex_0_ctl_tx": {
             "interface_ports": [
-              "cmac_control/ctl_tx",
+              "cmac_control_ex/ctl_tx",
               "cmac/ctl_tx"
             ]
           },
-          "cmac_control_gt_trans_debug": {
+          "cmac_control_ex_0_gt_trans_debug": {
             "interface_ports": [
-              "cmac_control/gt_trans_debug",
+              "cmac_control_ex/gt_trans_debug",
               "cmac/gt_trans_debug"
             ]
           },
-          "cmac_control_rs_fec": {
+          "cmac_control_ex_0_rs_fec": {
             "interface_ports": [
-              "cmac_control/rs_fec",
+              "cmac_control_ex/rs_fec",
               "cmac/rs_fec_in"
             ]
           },
           "cmac_stat_rx": {
             "interface_ports": [
-              "cmac_control/stat_rx",
+              "cmac_control_ex/stat_rx",
               "cmac/stat_rx"
             ]
           },
@@ -696,22 +715,28 @@
               "cmac/gt_drpclk"
             ]
           },
-          "cmac_control_reset_rx_datapath": {
+          "cmac_control_ex_reset_rx_datapath": {
             "ports": [
-              "cmac_control/reset_rx_datapath",
+              "cmac_control_ex/reset_rx_datapath",
               "cmac/gtwiz_reset_rx_datapath"
             ]
           },
-          "cmac_control_rx_resetn_out": {
+          "cmac_control_ex_rx_resetn_out": {
             "ports": [
-              "cmac_control/rx_resetn_out",
+              "cmac_control_ex/rx_resetn_out",
               "stream_resetn"
             ]
           },
-          "cmac_control_sync_rx_aligned": {
+          "cmac_control_ex_sync_rx_aligned": {
             "ports": [
-              "cmac_control/sync_rx_aligned",
+              "cmac_control_ex/sync_rx_aligned",
               "aligned"
+            ]
+          },
+          "cmac_control_ex_sys_reset_out": {
+            "ports": [
+              "cmac_control_ex/sys_reset_out",
+              "cmac/sys_reset"
             ]
           },
           "cmac_gt_rxusrclk2": {
@@ -719,13 +744,25 @@
               "cmac/gt_txusrclk2",
               "stream_clk",
               "cmac/rx_clk",
-              "cmac_control/rx_clk"
+              "cmac_control_ex/rx_clk"
+            ]
+          },
+          "rsfec_enable_1": {
+            "ports": [
+              "rsfec_enable",
+              "cmac_control_ex/rsfec_enable"
             ]
           },
           "sys_resetn_1": {
             "ports": [
               "sys_resetn",
-              "cmac_control/sys_resetn_in"
+              "cmac_control_ex/sys_resetn_in"
+            ]
+          },
+          "tx_pre_1": {
+            "ports": [
+              "tx_pre",
+              "cmac_control_ex/tx_pre"
             ]
           }
         }
@@ -771,6 +808,14 @@
           },
           "init_clk": {
             "direction": "I"
+          },
+          "rsfec_enable": {
+            "direction": "I"
+          },
+          "tx_pre": {
+            "direction": "I",
+            "left": "4",
+            "right": "0"
           }
         },
         "components": {
@@ -815,14 +860,14 @@
               }
             }
           },
-          "cmac_control": {
-            "vlnv": "xilinx.com:module_ref:cmac_control:1.0",
-            "xci_name": "top_level_cmac_control_1",
-            "xci_path": "ip/top_level_cmac_control_1/top_level_cmac_control_1.xci",
-            "inst_hier_path": "eth_1/cmac_control",
+          "cmac_control_ex": {
+            "vlnv": "xilinx.com:module_ref:cmac_control_ex:1.0",
+            "xci_name": "top_level_cmac_control_ex_0_1",
+            "xci_path": "ip/top_level_cmac_control_ex_0_1/top_level_cmac_control_ex_0_1.xci",
+            "inst_hier_path": "eth_1/cmac_control_ex",
             "reference_info": {
               "ref_type": "hdl",
-              "ref_name": "cmac_control",
+              "ref_name": "cmac_control_ex",
               "boundary_crc": "0x0"
             },
             "interface_ports": {
@@ -929,6 +974,20 @@
                   }
                 }
               },
+              "rsfec_enable": {
+                "direction": "I"
+              },
+              "tx_pre": {
+                "direction": "I",
+                "left": "4",
+                "right": "0",
+                "parameters": {
+                  "POLARITY": {
+                    "value": "ACTIVE_LOW",
+                    "value_src": "const_prop"
+                  }
+                }
+              },
               "rx_reset_out": {
                 "type": "rst",
                 "direction": "O",
@@ -961,6 +1020,9 @@
               },
               "sync_rx_aligned": {
                 "direction": "O"
+              },
+              "sys_reset_out": {
+                "direction": "O"
               }
             }
           }
@@ -984,33 +1046,33 @@
               "cmac/axis_rx"
             ]
           },
-          "cmac_control_ctl_rx": {
+          "cmac_control_ex_0_ctl_rx": {
             "interface_ports": [
-              "cmac_control/ctl_rx",
+              "cmac_control_ex/ctl_rx",
               "cmac/ctl_rx"
             ]
           },
-          "cmac_control_ctl_tx": {
+          "cmac_control_ex_0_ctl_tx": {
             "interface_ports": [
-              "cmac_control/ctl_tx",
+              "cmac_control_ex/ctl_tx",
               "cmac/ctl_tx"
             ]
           },
-          "cmac_control_gt_trans_debug": {
+          "cmac_control_ex_0_gt_trans_debug": {
             "interface_ports": [
-              "cmac_control/gt_trans_debug",
+              "cmac_control_ex/gt_trans_debug",
               "cmac/gt_trans_debug"
             ]
           },
-          "cmac_control_rs_fec": {
+          "cmac_control_ex_0_rs_fec": {
             "interface_ports": [
-              "cmac_control/rs_fec",
+              "cmac_control_ex/rs_fec",
               "cmac/rs_fec_in"
             ]
           },
           "cmac_stat_rx": {
             "interface_ports": [
-              "cmac_control/stat_rx",
+              "cmac_control_ex/stat_rx",
               "cmac/stat_rx"
             ]
           },
@@ -1022,22 +1084,28 @@
           }
         },
         "nets": {
-          "cmac_control_reset_rx_datapath": {
+          "cmac_control_ex_0_reset_rx_datapath": {
             "ports": [
-              "cmac_control/reset_rx_datapath",
+              "cmac_control_ex/reset_rx_datapath",
               "cmac/gtwiz_reset_rx_datapath"
             ]
           },
-          "cmac_control_rx_resetn_out": {
+          "cmac_control_ex_0_rx_resetn_out": {
             "ports": [
-              "cmac_control/rx_resetn_out",
+              "cmac_control_ex/rx_resetn_out",
               "stream_resetn"
             ]
           },
-          "cmac_control_sync_rx_aligned": {
+          "cmac_control_ex_0_sync_rx_aligned": {
             "ports": [
-              "cmac_control/sync_rx_aligned",
+              "cmac_control_ex/sync_rx_aligned",
               "aligned"
+            ]
+          },
+          "cmac_control_ex_0_sys_reset_out": {
+            "ports": [
+              "cmac_control_ex/sys_reset_out",
+              "cmac/sys_reset"
             ]
           },
           "cmac_gt_rxusrclk2": {
@@ -1045,7 +1113,7 @@
               "cmac/gt_txusrclk2",
               "stream_clk",
               "cmac/rx_clk",
-              "cmac_control/rx_clk"
+              "cmac_control_ex/rx_clk"
             ]
           },
           "init_clk_divider_init_clk": {
@@ -1056,10 +1124,22 @@
               "cmac/gt_drpclk"
             ]
           },
+          "rsfec_enable_1": {
+            "ports": [
+              "rsfec_enable",
+              "cmac_control_ex/rsfec_enable"
+            ]
+          },
           "sys_resetn_1": {
             "ports": [
               "sys_resetn",
-              "cmac_control/sys_resetn_in"
+              "cmac_control_ex/sys_resetn_in"
+            ]
+          },
+          "tx_pre_1": {
+            "ports": [
+              "tx_pre",
+              "cmac_control_ex/tx_pre"
             ]
           }
         }
@@ -1106,6 +1186,17 @@
           },
           "eth1_up": {
             "direction": "I"
+          },
+          "RSFEC_ENABLE": {
+            "direction": "O"
+          },
+          "CMAC_TXPRE": {
+            "direction": "O",
+            "left": "4",
+            "right": "0"
+          },
+          "resetn_out": {
+            "direction": "O"
           }
         },
         "components": {
@@ -2816,7 +2907,7 @@
                     "value_src": "constant"
                   },
                   "ASSOCIATED_RESET": {
-                    "value": "resetn",
+                    "value": "resetn:resetn_out",
                     "value_src": "constant"
                   },
                   "FREQ_HZ": {
@@ -2889,6 +2980,24 @@
                 "direction": "O",
                 "left": "31",
                 "right": "0"
+              },
+              "RSFEC_ENABLE": {
+                "direction": "O"
+              },
+              "CMAC_TXPRE": {
+                "direction": "O",
+                "left": "4",
+                "right": "0"
+              },
+              "resetn_out": {
+                "type": "rst",
+                "direction": "O",
+                "parameters": {
+                  "POLARITY": {
+                    "value": "ACTIVE_LOW",
+                    "value_src": "constant"
+                  }
+                }
               }
             }
           }
@@ -2945,6 +3054,12 @@
               "rate_limiter_0/BYTES_PER_USEC"
             ]
           },
+          "cabletest_ctl_CMAC_TXPRE": {
+            "ports": [
+              "cabletest_ctl/CMAC_TXPRE",
+              "CMAC_TXPRE"
+            ]
+          },
           "cabletest_ctl_CYCLES_PER_PACKET": {
             "ports": [
               "cabletest_ctl/CYCLES_PER_PACKET",
@@ -2959,10 +3074,26 @@
               "channel_1/PACKET_COUNT"
             ]
           },
+          "cabletest_ctl_RSFEC_ENABLE": {
+            "ports": [
+              "cabletest_ctl/RSFEC_ENABLE",
+              "RSFEC_ENABLE"
+            ]
+          },
           "cabletest_ctl_pg_control_1": {
             "ports": [
               "cabletest_ctl/pg_control_1",
               "channel_0/pg_control"
+            ]
+          },
+          "cabletest_ctl_resetn_out": {
+            "ports": [
+              "cabletest_ctl/resetn_out",
+              "channel_0/resetn",
+              "channel_1/resetn",
+              "rate_limiter_0/resetn",
+              "rate_limiter_1/resetn",
+              "resetn_out"
             ]
           },
           "channel_0_status": {
@@ -3020,10 +3151,6 @@
           "source_200Mhz_resetn": {
             "ports": [
               "resetn",
-              "channel_0/resetn",
-              "channel_1/resetn",
-              "rate_limiter_0/resetn",
-              "rate_limiter_1/resetn",
               "cabletest_ctl/resetn"
             ]
           }
@@ -4583,6 +4710,28 @@
       }
     },
     "nets": {
+      "cabletest_CMAC_TXPRE": {
+        "ports": [
+          "cabletest/CMAC_TXPRE",
+          "eth_0/tx_pre"
+        ]
+      },
+      "cabletest_RSFEC_ENABLE": {
+        "ports": [
+          "cabletest/RSFEC_ENABLE",
+          "eth_1/rsfec_enable",
+          "eth_0/rsfec_enable"
+        ]
+      },
+      "cabletest_resetn_out": {
+        "ports": [
+          "cabletest/resetn_out",
+          "eth_1/tx_pre",
+          "eth_0/sys_resetn",
+          "eth_1/sys_resetn",
+          "cmac_cdc/user_resetn"
+        ]
+      },
       "cmac_cdc_user0_aligned": {
         "ports": [
           "cmac_cdc/user0_aligned",
@@ -4671,10 +4820,7 @@
       "source_200Mhz_resetn": {
         "ports": [
           "pcie/axi_aresetn",
-          "eth_0/sys_resetn",
-          "eth_1/sys_resetn",
           "cabletest/resetn",
-          "cmac_cdc/user_resetn",
           "smartconnect/aresetn",
           "qsfp_control/resetn",
           "axi_revision/AXI_ARESETN"

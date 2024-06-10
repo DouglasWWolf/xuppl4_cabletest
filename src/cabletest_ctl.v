@@ -7,6 +7,11 @@
 // 01-Dec-23  DWW     1  Initial creation
 //
 // 15-Apr-24  DWW     2  Added support for BYTES_PER_USEC
+//
+// 08-Jun-24  DWW     3  Added port resetn_out
+//                       Added port RSFEC_ENABLE
+//                       Added port CMAC_TXPRE
+//                       Added REG_RESET, REG_TXPRE, and REG_RSFEC
 //====================================================================================
 
 /*
@@ -14,9 +19,14 @@
 */
 
 
-module cabletest_ctl 
+module cabletest_ctl # (parameter DEFAULT_TXPRE = 5'h00, CLK_HZ = 250000000)
 (
-    input clk, resetn,
+
+    (* X_INTERFACE_INFO      = "xilinx.com:signal:clock:1.0 clk CLK"    *)
+    (* X_INTERFACE_PARAMETER = "ASSOCIATED_RESET resetn:resetn_out" *)
+    input clk,
+    
+    input resetn,
 
     //================== This is an AXI4-Lite slave interface ==================
         
@@ -67,8 +77,18 @@ module cabletest_ctl
     output reg[63:0] PACKET_COUNT,
     
     // Rate of the output data
-    output reg[31:0] BYTES_PER_USEC
+    output reg[31:0] BYTES_PER_USEC,
 
+    // This feeds the CMACs
+    output reg       RSFEC_ENABLE,
+
+    // Transmit pre-emphasis level for the CMACs
+    output reg[4:0]  CMAC_TXPRE,
+
+    // This drives "resetn" for most of the rest of the system
+    (* X_INTERFACE_INFO      = "xilinx.com:signal:reset:1.0 resetn_out RST" *)
+    (* X_INTERFACE_PARAMETER = "POLARITY ACTIVE_LOW"                            *)
+    output reg resetn_out
     //==========================================================================    
 );  
 
@@ -99,9 +119,13 @@ module cabletest_ctl
     localparam REG_CONTROL           = 15;
     localparam REG_ETH_STATUS        = 16;
     localparam REG_BYTES_PER_USEC    = 17;
+    localparam REG_RESET             = 18;
+    localparam REG_RSFEC             = 19;
+    localparam REG_TXPRE             = 20;
+   
     //==========================================================================
 
-    localparam DEFAULT_BYTES_PER_USEC = 12160;
+    localparam DEFAULT_BYTES_PER_USEC = 11000;
 
     //==========================================================================
     // We'll communicate with the AXI4-Lite Slave core with these signals.
@@ -178,6 +202,9 @@ module cabletest_ctl
     // This is a 32-bit status register that reflects the state of Ethernet
     wire[31:0] eth_status = {15'b0, eth1_up, 15'b0, eth0_up};
 
+    // When this strobes high, a reset sequence begins on resetn_out
+    reg perform_reset;
+
     //==========================================================================
     // This state machine handles AXI4-Lite write requests
     //
@@ -186,10 +213,11 @@ module cabletest_ctl
     always @(posedge clk) begin
     
         // These will only strobe high for one cycle
-        start   <= 0;
-        halt    <= 0;
-        inject1 <= 0;
-        inject2 <= 0;
+        start         <= 0;
+        halt          <= 0;
+        inject1       <= 0;
+        inject2       <= 0;
+        perform_reset <= 0;
 
         // If we're in reset, initialize important registers
         if (resetn == 0) begin
@@ -197,6 +225,8 @@ module cabletest_ctl
             PACKET_COUNT      <= 0;
             CYCLES_PER_PACKET <= 16;
             BYTES_PER_USEC    <= DEFAULT_BYTES_PER_USEC;
+            RSFEC_ENABLE      <= 1;
+            CMAC_TXPRE        <= DEFAULT_TXPRE;
 
         // If we're not in reset, and a write-request has occured...        
         end else case (axi4_write_state)
@@ -206,7 +236,7 @@ module cabletest_ctl
                 // Assume for the moment that the result will be OKAY
                 ashi_wresp <= OKAY;              
             
-                // Convert the byte address into a register index
+                // Action depends upon the register index
                 case (ashi_windx)
 
                     REG_CYCLES_PER_PACKET:
@@ -234,6 +264,15 @@ module cabletest_ctl
                         
                     REG_BYTES_PER_USEC:
                         BYTES_PER_USEC <= ashi_wdata;
+
+                    REG_RESET:
+                        perform_reset  <= 1;
+
+                    REG_RSFEC:
+                        RSFEC_ENABLE <= ashi_wdata;
+
+                    REG_TXPRE:
+                        CMAC_TXPRE <= ashi_wdata;
 
                     // Writes to any other register are a decode-error
                     default: ashi_wresp <= DECERR;
@@ -284,6 +323,9 @@ module cabletest_ctl
                 REG_ERRORS2:            ashi_rdata <= errors2;
                 REG_ETH_STATUS:         ashi_rdata <= eth_status;
                 REG_BYTES_PER_USEC:     ashi_rdata <= BYTES_PER_USEC;
+                REG_RESET:              ashi_rdata <= (resetn_out == 0);
+                REG_RSFEC:              ashi_rdata <= RSFEC_ENABLE;
+                REG_TXPRE:              ashi_rdata <= CMAC_TXPRE;
                 
                 // Reads of any other register are a decode-error
                 default: ashi_rresp <= DECERR;
@@ -314,6 +356,56 @@ module cabletest_ctl
         end
     end
     //==========================================================================
+
+
+
+    //==========================================================================
+    // This state machine manages "resetn_out".   Whenever "perform_reset" is
+    // strobed high, the "resetn_out" signal will be asserted for "RESET_USECS" 
+    // microseconds
+    //==========================================================================
+    reg[31:0] reset_timer;
+    reg[ 1:0] rsm_state;
+    localparam RESETN_OUT_ACTIVE   = 0;
+    localparam RESETN_OUT_INACTIVE = 1;
+    localparam RESET_USECS         = 100;
+    //--------------------------------------------------------------------------
+    always @(posedge clk) begin
+        
+        // This timer continuously counts down
+        if (reset_timer) reset_timer <= reset_timer - 1;
+        
+        // Are we being held in reset?
+        if (resetn == 0) begin
+            rsm_state  <= 0;
+            resetn_out <= RESETN_OUT_ACTIVE;
+        end 
+
+        // We're not in reset, run the state machine
+        else case(rsm_state)
+
+            0:  begin
+                    resetn_out  <= RESETN_OUT_ACTIVE;
+                    reset_timer <= (CLK_HZ / 1000000) * RESET_USECS;
+                    rsm_state   <= 1;
+                end
+
+            1:  if (reset_timer == 0) begin
+                    resetn_out <= RESETN_OUT_INACTIVE;
+                    rsm_state  <= 2;
+                end
+
+            2:  if (perform_reset) begin
+                    resetn_out  <= RESETN_OUT_ACTIVE;
+                    reset_timer <= (CLK_HZ / 1000000) * RESET_USECS;
+                    rsm_state   <= 1;
+                end 
+
+        endcase
+
+    end
+    //==========================================================================
+
 
 
 

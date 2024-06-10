@@ -33,26 +33,6 @@ fi
 # Is the bitstream not yet loaded?
 test $(is_bitstream_loaded) -eq 0 && need_bitstream=1
 
-# If we already have a the bitstream loaded...
-if [ $(is_bitstream_loaded) -eq 1 ]; then
-
-    # If there were a large number of previous errors, we're
-    # going to force a reload of the bitstreams
-    error_count1=$(get_errors 1)
-    error_count2=$(get_errors 2)
-    errors=$((error_count1 + error_count2))
-    test $errors -gt 10 && need_bitstream=1
-
-    # If there's an existing job running, halt it and wait a moment
-    # for the final packets to be received
-    if [ $(is_busy) -ne 0 ]; then
-        echo "Halting existing job..."
-        stop
-        sleep 1
-        echo "Halted"
-    fi
-fi
-
 # If we need to load the bitstreams into the FPGA, make it so
 if [ $need_bitstream -eq 1 ]; then
 
@@ -84,6 +64,21 @@ fi
 # If we don't have QSFP lock, we can't continue
 test $have_pcs -eq 0 && exit 1
 
+# If a job is already runnning...
+if [ $(is_busy) -ne 0 ]; then
+    
+    # Stop the job
+    echo "Stopping running job..."
+    stop
+
+    # Give the receiver time to sense that the job
+    # has been stopped and perform its reset
+    sleep 2
+
+    # Reset our datapath
+    reset
+fi
+
 # Set the packet size to 1024 bytes (i.e., 16 cycles * 64-bytes per cycle)
 set_cycles_per_packet 16
 
@@ -102,6 +97,9 @@ xfer_packets=$((xfer_bytes / packet_bytes / 2))
 
 # Determine exactly how many bytes we'll transfer across both channels
 xfer_bytes=$((xfer_packets * 2 * packet_bytes))
+
+# Perform a system reset
+reset
 
 # Start transferring packets
 start $xfer_packets

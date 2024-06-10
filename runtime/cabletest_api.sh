@@ -3,8 +3,9 @@
 # -----------------------------------------------------------------------------
 # 06-Dec-23  1.0.0  DWW  Initial Creation
 # 28-Feb-24  1.2.0  DWW  Now assuming the existence of /opt/fpga_runtime
+# 08-Jun-24  1.3.0  DWW  Added commands RESET, RSFEC, and TXPRE
 #==============================================================================
-CABLETEST_API_VERSION=1.2.0
+CABLETEST_API_VERSION=1.3.0
 
 
 #==============================================================================
@@ -30,6 +31,11 @@ REG_CYCLES_PER_PACKET=$((CABLETEST_BASE +  2*4))
           REG_ERRORS2=$((CABLETEST_BASE + 14*4))
           REG_CONTROL=$((CABLETEST_BASE + 15*4))
        REG_ETH_STATUS=$((CABLETEST_BASE + 16*4))
+    REG_BYTES_PER_SEC=$((CABLETEST_BASE + 17*4))
+            REG_RESET=$((CABLETEST_BASE + 18*4))
+            REG_RSFEC=$((CABLETEST_BASE + 19*4))
+            REG_TXPRE=$((CABLETEST_BASE + 20*4))
+
 
 #==============================================================================
 # This strips underscores from a string and converts it to decimal
@@ -73,16 +79,9 @@ read_reg()
     # Capture the value of the AXI register
     pcireg -dec $1
 
-    # Extract just the first word of that text
-    #$text=($text)
-
-    # Convert the text into a number
-    #value=$((text))
-
-    # Hand the value to the caller
-    #echo $value
 }
 #==============================================================================
+
 
 
 #==============================================================================
@@ -122,15 +121,12 @@ get_rtl_version()
 }
 #==============================================================================
 
-
-
-
 #==============================================================================
 # Displays 1 if bitstream is loaded, otherwise displays "0"
 #==============================================================================
 is_bitstream_loaded()
 {
-    reg=$(read_reg $REG_MODULE_REV)
+    reg=$(read_reg 0)
     test $reg -ne $((0xFFFFFFFF)) && echo "1" || echo "0"
 }
 #==============================================================================
@@ -146,6 +142,78 @@ is_busy()
     echo $((status & 3))
 }
 #==============================================================================
+
+
+#==============================================================================
+# This resets all of the packet-producing and receiving logic
+#==============================================================================
+reset()
+{
+    pcireg $REG_RESET 1
+    while [ $(read_reg $REG_RESET) -ne 0 ]; do
+        sleep .01
+    done
+
+    # Ensure everything has had time to come out of reset 
+    sleep .01
+}
+#==============================================================================
+
+
+#==============================================================================
+# Enables or disables RS-FEC on the Ethernert CMAC modules
+#==============================================================================
+rsfec()
+{
+    local value=$1
+    if [ "$value" == "" ]; then
+        read_reg $REG_RSFEC
+        return
+    fi
+
+    # Convert "on" and "off" to 1 and 0 respectively
+    test $value == "on"  && value=1
+    test $value == "off" && value=0
+
+    # Change the RSFEC setting
+    pcireg $REG_RSFEC $value
+
+    # Reset the system to allow the new setting to take effect
+    reset
+}
+#==============================================================================
+
+
+
+#==============================================================================
+# This sets the pre-emphasis value for the CMAC TX path.
+#
+# Valid values are 0 thru 31
+#==============================================================================
+txpre()
+{    
+    local value=$1
+
+    # Does the user just want to print out the value?
+    if [ "$value" == "" ]; then
+        read_reg $REG_TXPRE
+        return
+    fi
+
+    # Ensure the value provided by the user is between 0 and 31
+    if [ $value -lt 0 ] || [ $value -gt 31 ]; then
+        echo "Invalid value [$value] on txpre" 1>&2
+        return
+    fi
+
+    # Change the TXPRE setting
+    pcireg $REG_TXPRE $value
+
+    # Reset the system to allow the new setting to take effect
+    reset
+}
+#==============================================================================
+
 
 
 #==============================================================================
