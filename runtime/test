@@ -48,7 +48,7 @@ fi
 
 
 # Tell the world which version we are
-echo "indy_cabletest RTL version" $(get_rtl_version)
+echo "xuppl4_cabletest RTL version" $(get_rtl_version)
 
 # Display error message if we don't have PCS lock on the QSFP ports
 have_pcs=1
