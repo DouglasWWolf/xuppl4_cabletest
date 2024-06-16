@@ -10,13 +10,15 @@
 //                          pre-emphasis on the CMAC serdes.
 //
 // 08-Jun-2024  1.3.0  DWW  Added run-time control over RS-FEC and the pre-emphasis setting
+//
+// 15-Jun-2024  1.4.0  DWW  Now controlling CMAC gt_txdiffctrl
 //================================================================================================
 localparam VERSION_MAJOR = 1;
-localparam VERSION_MINOR = 3;
+localparam VERSION_MINOR = 4;
 localparam VERSION_BUILD = 0;
 localparam VERSION_RCAND = 0;
 
-localparam VERSION_DAY   = 8;
+localparam VERSION_DAY   = 15;
 localparam VERSION_MONTH = 6;
 localparam VERSION_YEAR  = 2024;
 

@@ -554,6 +554,12 @@
                 "vlnv_bus_definition": "xilinx.com:display_cmac_usplus:drp_ports_int:2.0",
                 "vlnv": "xilinx.com:display_cmac_usplus:drp_ports:2.0",
                 "port_maps": {
+                  "gt_txdiffctrl": {
+                    "physical_name": "gt_txdiffctrl",
+                    "direction": "O",
+                    "left": "19",
+                    "right": "0"
+                  },
                   "gt_txprecursor": {
                     "physical_name": "gt_txprecursor",
                     "direction": "O",
@@ -675,16 +681,16 @@
               "cmac/ctl_tx"
             ]
           },
-          "cmac_control_ex_0_gt_trans_debug": {
-            "interface_ports": [
-              "cmac_control_ex/gt_trans_debug",
-              "cmac/gt_trans_debug"
-            ]
-          },
           "cmac_control_ex_0_rs_fec": {
             "interface_ports": [
               "cmac_control_ex/rs_fec",
               "cmac/rs_fec_in"
+            ]
+          },
+          "cmac_control_ex_gt_trans_debug": {
+            "interface_ports": [
+              "cmac_control_ex/gt_trans_debug",
+              "cmac/gt_trans_debug"
             ]
           },
           "cmac_stat_rx": {
@@ -925,6 +931,12 @@
                 "vlnv_bus_definition": "xilinx.com:display_cmac_usplus:drp_ports_int:2.0",
                 "vlnv": "xilinx.com:display_cmac_usplus:drp_ports:2.0",
                 "port_maps": {
+                  "gt_txdiffctrl": {
+                    "physical_name": "gt_txdiffctrl",
+                    "direction": "O",
+                    "left": "19",
+                    "right": "0"
+                  },
                   "gt_txprecursor": {
                     "physical_name": "gt_txprecursor",
                     "direction": "O",
@@ -1058,16 +1070,16 @@
               "cmac/ctl_tx"
             ]
           },
-          "cmac_control_ex_0_gt_trans_debug": {
-            "interface_ports": [
-              "cmac_control_ex/gt_trans_debug",
-              "cmac/gt_trans_debug"
-            ]
-          },
           "cmac_control_ex_0_rs_fec": {
             "interface_ports": [
               "cmac_control_ex/rs_fec",
               "cmac/rs_fec_in"
+            ]
+          },
+          "cmac_control_ex_gt_trans_debug": {
+            "interface_ports": [
+              "cmac_control_ex/gt_trans_debug",
+              "cmac/gt_trans_debug"
             ]
           },
           "cmac_stat_rx": {
