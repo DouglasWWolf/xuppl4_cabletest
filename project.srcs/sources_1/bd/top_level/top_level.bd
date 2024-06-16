@@ -445,6 +445,16 @@
             "direction": "I",
             "left": "4",
             "right": "0"
+          },
+          "tx_post": {
+            "direction": "I",
+            "left": "4",
+            "right": "0"
+          },
+          "tx_diff": {
+            "direction": "I",
+            "left": "4",
+            "right": "0"
           }
         },
         "components": {
@@ -560,6 +570,12 @@
                     "left": "19",
                     "right": "0"
                   },
+                  "gt_txpostcursor": {
+                    "physical_name": "gt_txpostcursor",
+                    "direction": "O",
+                    "left": "19",
+                    "right": "0"
+                  },
                   "gt_txprecursor": {
                     "physical_name": "gt_txprecursor",
                     "direction": "O",
@@ -613,6 +629,16 @@
                 "direction": "I"
               },
               "tx_pre": {
+                "direction": "I",
+                "left": "4",
+                "right": "0"
+              },
+              "tx_post": {
+                "direction": "I",
+                "left": "4",
+                "right": "0"
+              },
+              "tx_diff": {
                 "direction": "I",
                 "left": "4",
                 "right": "0"
@@ -765,6 +791,18 @@
               "cmac_control_ex/sys_resetn_in"
             ]
           },
+          "tx_diff_1": {
+            "ports": [
+              "tx_diff",
+              "cmac_control_ex/tx_diff"
+            ]
+          },
+          "tx_post_1": {
+            "ports": [
+              "tx_post",
+              "cmac_control_ex/tx_post"
+            ]
+          },
           "tx_pre_1": {
             "ports": [
               "tx_pre",
@@ -819,6 +857,16 @@
             "direction": "I"
           },
           "tx_pre": {
+            "direction": "I",
+            "left": "4",
+            "right": "0"
+          },
+          "tx_post": {
+            "direction": "I",
+            "left": "4",
+            "right": "0"
+          },
+          "tx_diff": {
             "direction": "I",
             "left": "4",
             "right": "0"
@@ -937,6 +985,12 @@
                     "left": "19",
                     "right": "0"
                   },
+                  "gt_txpostcursor": {
+                    "physical_name": "gt_txpostcursor",
+                    "direction": "O",
+                    "left": "19",
+                    "right": "0"
+                  },
                   "gt_txprecursor": {
                     "physical_name": "gt_txprecursor",
                     "direction": "O",
@@ -999,6 +1053,16 @@
                     "value_src": "const_prop"
                   }
                 }
+              },
+              "tx_post": {
+                "direction": "I",
+                "left": "4",
+                "right": "0"
+              },
+              "tx_diff": {
+                "direction": "I",
+                "left": "4",
+                "right": "0"
               },
               "rx_reset_out": {
                 "type": "rst",
@@ -1148,6 +1212,18 @@
               "cmac_control_ex/sys_resetn_in"
             ]
           },
+          "tx_diff_1": {
+            "ports": [
+              "tx_diff",
+              "cmac_control_ex/tx_diff"
+            ]
+          },
+          "tx_post_1": {
+            "ports": [
+              "tx_post",
+              "cmac_control_ex/tx_post"
+            ]
+          },
           "tx_pre_1": {
             "ports": [
               "tx_pre",
@@ -1209,6 +1285,16 @@
           },
           "resetn_out": {
             "direction": "O"
+          },
+          "CMAC_TXDIFF": {
+            "direction": "O",
+            "left": "4",
+            "right": "0"
+          },
+          "CMAC_TXPOST": {
+            "direction": "O",
+            "left": "4",
+            "right": "0"
           }
         },
         "components": {
@@ -3001,6 +3087,16 @@
                 "left": "4",
                 "right": "0"
               },
+              "CMAC_TXPOST": {
+                "direction": "O",
+                "left": "4",
+                "right": "0"
+              },
+              "CMAC_TXDIFF": {
+                "direction": "O",
+                "left": "4",
+                "right": "0"
+              },
               "resetn_out": {
                 "type": "rst",
                 "direction": "O",
@@ -3064,6 +3160,18 @@
               "cabletest_ctl/BYTES_PER_USEC",
               "rate_limiter_1/BYTES_PER_USEC",
               "rate_limiter_0/BYTES_PER_USEC"
+            ]
+          },
+          "cabletest_ctl_CMAC_TXDIFF": {
+            "ports": [
+              "cabletest_ctl/CMAC_TXDIFF",
+              "CMAC_TXDIFF"
+            ]
+          },
+          "cabletest_ctl_CMAC_TXPOST": {
+            "ports": [
+              "cabletest_ctl/CMAC_TXPOST",
+              "CMAC_TXPOST"
             ]
           },
           "cabletest_ctl_CMAC_TXPRE": {
@@ -4722,6 +4830,20 @@
       }
     },
     "nets": {
+      "cabletest_CMAC_TXDIFF": {
+        "ports": [
+          "cabletest/CMAC_TXDIFF",
+          "eth_1/tx_diff",
+          "eth_0/tx_diff"
+        ]
+      },
+      "cabletest_CMAC_TXPOST": {
+        "ports": [
+          "cabletest/CMAC_TXPOST",
+          "eth_1/tx_post",
+          "eth_0/tx_post"
+        ]
+      },
       "cabletest_CMAC_TXPRE": {
         "ports": [
           "cabletest/CMAC_TXPRE",

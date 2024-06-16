@@ -3,17 +3,16 @@
 # -----------------------------------------------------------------------------
 # 06-Dec-23  1.0.0  DWW  Initial Creation
 # 28-Feb-24  1.2.0  DWW  Now assuming the existence of /opt/fpga_runtime
-# 08-Jun-24  1.3.0  DWW  Added commands RESET, RSFEC, and TXPRE
+# 08-Jun-24  1.3.0  DWW  Added commands "reset", "rsfec" and "txpre"
+# 16-Jun-24  1.5.0  DWW  Added command "txpost" and "txpre"
 #==============================================================================
-CABLETEST_API_VERSION=1.3.0
+CABLETEST_API_VERSION=1.5.0
 
 
 #==============================================================================
 # AXI register definitions
 #==============================================================================
 CABLETEST_BASE=0x1000
-
-
        REG_MODULE_REV=$((CABLETEST_BASE +  0*4))
            REG_STATUS=$((CABLETEST_BASE +  1*4))
 REG_CYCLES_PER_PACKET=$((CABLETEST_BASE +  2*4))
@@ -35,40 +34,8 @@ REG_CYCLES_PER_PACKET=$((CABLETEST_BASE +  2*4))
             REG_RESET=$((CABLETEST_BASE + 18*4))
             REG_RSFEC=$((CABLETEST_BASE + 19*4))
             REG_TXPRE=$((CABLETEST_BASE + 20*4))
-
-
-#==============================================================================
-# This strips underscores from a string and converts it to decimal
-#==============================================================================
-strip_underscores()
-{
-    local stripped=$(echo $1 | sed 's/_//g')
-    echo $((stripped))
-}
-#==============================================================================
-
-
-#==============================================================================
-# This displays the upper 32 bits of an integer
-#==============================================================================
-upper32()
-{
-    local value=$(strip_underscores $1)
-    echo $(((value >> 32) & 0xFFFFFFFF))
-}
-#==============================================================================
-
-
-
-#==============================================================================
-# This displays the lower 32 bits of an integer
-#==============================================================================
-lower32()
-{
-    local value=$(strip_underscores $1)
-    echo $((value & 0xFFFFFFFF))
-}
-#==============================================================================
+           REG_TXPOST=$((CABLETEST_BASE + 21*4))
+           REG_TXDIFF=$((CABLETEST_BASE + 22*4))
 
 
 #==============================================================================
@@ -76,9 +43,7 @@ lower32()
 #==============================================================================
 read_reg()
 {
-    # Capture the value of the AXI register
     pcireg -dec $1
-
 }
 #==============================================================================
 
@@ -89,22 +54,7 @@ read_reg()
 #==============================================================================
 read_reg64()
 {
-    local hi_reg=$1
-    local lo_reg=$((hi_reg + 4))
-
-    # Read both 32-bit words of the register
-    local msw=$(read_reg $hi_reg)
-    local lsw=$(read_reg $lo_reg)
-
-    # Re-read the high word.   If it has changes, it means
-    # the register rolled-over across a 32-bit boundary 
-    # and it needs to be re-read
-    if [ $(read_reg $hi_reg) -ne $msw ]; then
-        msw=$(read_reg $hi_reg)
-        lsw=$(read_reg $lo_reg)
-    fi
-
-    echo $(((msw << 32) | lsw))
+    pcireg -wide -dec $1
 }
 #==============================================================================
 
@@ -126,7 +76,7 @@ get_rtl_version()
 #==============================================================================
 is_bitstream_loaded()
 {
-    reg=$(read_reg 0)
+    reg=$(read_reg $REG_MODULE_REV)
     test $reg -ne $((0xFFFFFFFF)) && echo "1" || echo "0"
 }
 #==============================================================================
@@ -201,7 +151,7 @@ txpre()
     fi
 
     # Ensure the value provided by the user is between 0 and 31
-    if [ $value -lt 0 ] || [ $value -gt 31 ]; then
+    if [ $((value)) -lt 0 ] || [ $((value)) -gt 31 ]; then
         echo "Invalid value [$value] on txpre" 1>&2
         return
     fi
@@ -213,6 +163,72 @@ txpre()
     reset
 }
 #==============================================================================
+
+
+#==============================================================================
+# This sets the post-emphasis value for the CMAC TX path.
+#
+# Valid values are 0 thru 31
+#==============================================================================
+txpost()
+{    
+    local value=$1
+
+    # Does the user just want to print out the value?
+    if [ "$value" == "" ]; then
+        read_reg $REG_TXPOST
+        return
+    fi
+
+    # Ensure the value provided by the user is between 0 and 31
+    if [ $((value)) -lt 0 ] || [ $((value)) -gt 31 ]; then
+        echo "Invalid value [$value] on txpost" 1>&2
+        return
+    fi
+
+    # Change the TXPOST setting
+    pcireg $REG_TXPOST $value
+
+    # Reset the system to allow the new setting to take effect
+    reset
+}
+#==============================================================================
+
+
+
+#==============================================================================
+# This sets the differential voltage swing for the CMAC TX path.
+#
+# Valid values are 0 thru 31
+#==============================================================================
+txdiff()
+{    
+    local value=$1
+
+    # Does the user just want to print out the value?
+    if [ "$value" == "" ]; then
+        read_reg $REG_TXDIFF
+        return
+    fi
+
+    # Ensure the value provided by the user is between 0 and 31
+    if [ $((value)) -lt 0 ] || [ $((value)) -gt 31 ]; then
+        echo "Invalid value [$value] on txdiff" 1>&2
+        return
+    fi
+
+    # Change the TXDIFF setting
+    pcireg $REG_TXDIFF $value
+
+    # Reset the system to allow the new setting to take effect
+    reset
+}
+#==============================================================================
+
+
+
+
+
 
 
 
@@ -244,8 +260,7 @@ start()
         echo "Missing parameter on start()" 1>&2
         return 1
     else
-        pcireg $REG_PACKET_COUNTH $(upper32 $packet_count)
-        pcireg $REG_PACKET_COUNTL $(lower32 $packet_count)        
+        pcireg -wide $REG_PACKET_COUNTH $packet_count
     fi
 
     return 0

@@ -245,7 +245,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>94cc9cd7</spirit:value>
+            <spirit:value>580c8a87</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -258,7 +258,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>94cc9cd7</spirit:value>
+            <spirit:value>580c8a87</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -784,6 +784,40 @@
         </spirit:wire>
       </spirit:port>
       <spirit:port>
+        <spirit:name>CMAC_TXPOST</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long">4</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>reg</spirit:typeName>
+              <spirit:viewNameRef>xilinx_anylanguagesynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_anylanguagebehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>CMAC_TXDIFF</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long">4</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>reg</spirit:typeName>
+              <spirit:viewNameRef>xilinx_anylanguagesynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_anylanguagebehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
         <spirit:name>resetn_out</spirit:name>
         <spirit:wire>
           <spirit:direction>out</spirit:direction>
@@ -799,14 +833,24 @@
     </spirit:ports>
     <spirit:modelParameters>
       <spirit:modelParameter xsi:type="spirit:nameValueTypeType" spirit:dataType="integer">
+        <spirit:name>CLK_HZ</spirit:name>
+        <spirit:displayName>Clk Hz</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.CLK_HZ">250000000</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>DEFAULT_TXPRE</spirit:name>
         <spirit:displayName>Default Txpre</spirit:displayName>
         <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.DEFAULT_TXPRE" spirit:bitStringLength="5">&quot;00000&quot;</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
-        <spirit:name>CLK_HZ</spirit:name>
-        <spirit:displayName>Clk Hz</spirit:displayName>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.CLK_HZ">250000000</spirit:value>
+        <spirit:name>DEFAULT_TXPOST</spirit:name>
+        <spirit:displayName>Default Txpost</spirit:displayName>
+        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.DEFAULT_TXPOST" spirit:bitStringLength="5">&quot;00000&quot;</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="integer">
+        <spirit:name>DEFAULT_TXDIFF</spirit:name>
+        <spirit:displayName>Default Txdiff</spirit:displayName>
+        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.DEFAULT_TXDIFF" spirit:bitStringLength="5">&quot;11000&quot;</spirit:value>
       </spirit:modelParameter>
     </spirit:modelParameters>
   </spirit:model>
@@ -823,7 +867,7 @@
       <spirit:file>
         <spirit:name>xgui/cabletest_ctl_v1_0.tcl</spirit:name>
         <spirit:fileType>tclSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_d328c91d</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_b033458a</spirit:userFileType>
         <spirit:userFileType>XGUI_VERSION_2</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
@@ -831,14 +875,24 @@
   <spirit:description>xilinx.com:module_ref:cabletest_ctl:1.0</spirit:description>
   <spirit:parameters>
     <spirit:parameter>
+      <spirit:name>CLK_HZ</spirit:name>
+      <spirit:displayName>Clk Hz</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.CLK_HZ">250000000</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
       <spirit:name>DEFAULT_TXPRE</spirit:name>
       <spirit:displayName>Default Txpre</spirit:displayName>
       <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.DEFAULT_TXPRE" spirit:bitStringLength="5">&quot;00000&quot;</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
-      <spirit:name>CLK_HZ</spirit:name>
-      <spirit:displayName>Clk Hz</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.CLK_HZ">250000000</spirit:value>
+      <spirit:name>DEFAULT_TXPOST</spirit:name>
+      <spirit:displayName>Default Txpost</spirit:displayName>
+      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.DEFAULT_TXPOST" spirit:bitStringLength="5">&quot;00000&quot;</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>DEFAULT_TXDIFF</spirit:name>
+      <spirit:displayName>Default Txdiff</spirit:displayName>
+      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.DEFAULT_TXDIFF" spirit:bitStringLength="5">&quot;11000&quot;</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>Component_Name</spirit:name>
@@ -860,7 +914,7 @@
         <xilinx:designToolContext>IPI</xilinx:designToolContext>
       </xilinx:designToolContexts>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2024-06-10T03:01:19Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2024-06-16T22:55:28Z</xilinx:coreCreationDateTime>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2021.1</xilinx:xilinxVersion>

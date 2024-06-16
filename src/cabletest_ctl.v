@@ -12,18 +12,30 @@
 //                       Added port RSFEC_ENABLE
 //                       Added port CMAC_TXPRE
 //                       Added REG_RESET, REG_TXPRE, and REG_RSFEC
+//
+// 16-Jun-24  DWW     4  Added port CMAC_TXPOST and CMAC_TXDIFF
+//                       Added REG_TXPOST and REG_TXDIFF
 //====================================================================================
 
 /*
 
+    Provides a register interface for interacting with the rest of the design
+
 */
 
 
-module cabletest_ctl # (parameter DEFAULT_TXPRE = 5'h00, CLK_HZ = 250000000)
+module cabletest_ctl #
+(
+    parameter CLK_HZ         = 250000000,
+    parameter DEFAULT_TXPRE  = 5'h00,
+    parameter DEFAULT_TXPOST = 5'h00,
+    parameter DEFAULT_TXDIFF = 5'h18
+
+)
 (
 
-    (* X_INTERFACE_INFO      = "xilinx.com:signal:clock:1.0 clk CLK"    *)
-    (* X_INTERFACE_PARAMETER = "ASSOCIATED_RESET resetn:resetn_out" *)
+    (* X_INTERFACE_INFO      = "xilinx.com:signal:clock:1.0 clk CLK"  *)
+    (* X_INTERFACE_PARAMETER = "ASSOCIATED_RESET resetn:resetn_out"   *)
     input clk,
     
     input resetn,
@@ -82,8 +94,8 @@ module cabletest_ctl # (parameter DEFAULT_TXPRE = 5'h00, CLK_HZ = 250000000)
     // This feeds the CMACs
     output reg       RSFEC_ENABLE,
 
-    // Transmit pre-emphasis level for the CMACs
-    output reg[4:0]  CMAC_TXPRE,
+    // GT controls for the CMACs
+    output reg[4:0]  CMAC_TXPRE, CMAC_TXPOST, CMAC_TXDIFF,
 
     // This drives "resetn" for most of the rest of the system
     (* X_INTERFACE_INFO      = "xilinx.com:signal:reset:1.0 resetn_out RST" *)
@@ -122,6 +134,8 @@ module cabletest_ctl # (parameter DEFAULT_TXPRE = 5'h00, CLK_HZ = 250000000)
     localparam REG_RESET             = 18;
     localparam REG_RSFEC             = 19;
     localparam REG_TXPRE             = 20;
+    localparam REG_TXPOST            = 21;
+    localparam REG_TXDIFF            = 22;
    
     //==========================================================================
 
@@ -227,6 +241,8 @@ module cabletest_ctl # (parameter DEFAULT_TXPRE = 5'h00, CLK_HZ = 250000000)
             BYTES_PER_USEC    <= DEFAULT_BYTES_PER_USEC;
             RSFEC_ENABLE      <= 1;
             CMAC_TXPRE        <= DEFAULT_TXPRE;
+            CMAC_TXPOST       <= DEFAULT_TXPOST;
+            CMAC_TXDIFF       <= DEFAULT_TXDIFF;
 
         // If we're not in reset, and a write-request has occured...        
         end else case (axi4_write_state)
@@ -268,11 +284,10 @@ module cabletest_ctl # (parameter DEFAULT_TXPRE = 5'h00, CLK_HZ = 250000000)
                     REG_RESET:
                         perform_reset  <= 1;
 
-                    REG_RSFEC:
-                        RSFEC_ENABLE <= ashi_wdata;
-
-                    REG_TXPRE:
-                        CMAC_TXPRE <= ashi_wdata;
+                    REG_RSFEC:  RSFEC_ENABLE <= ashi_wdata;
+                    REG_TXPRE:  CMAC_TXPRE   <= ashi_wdata;
+                    REG_TXPOST: CMAC_TXPOST  <= ashi_wdata;
+                    REG_TXDIFF: CMAC_TXDIFF  <= ashi_wdata;
 
                     // Writes to any other register are a decode-error
                     default: ashi_wresp <= DECERR;
@@ -286,10 +301,13 @@ module cabletest_ctl # (parameter DEFAULT_TXPRE = 5'h00, CLK_HZ = 250000000)
 
 
 
-
     //==========================================================================
     // World's simplest state machine for handling AXI4-Lite read requests
     //==========================================================================
+    reg[31:0] PACKET_COUNT_L;
+    reg[31:0] packets_out1_L, packets_out2_L;
+    reg[31:0] packets_in1_L,   packets_in2_L;
+
     always @(posedge clk) begin
 
         // If we're in reset, initialize important registers
@@ -306,19 +324,44 @@ module cabletest_ctl # (parameter DEFAULT_TXPRE = 5'h00, CLK_HZ = 250000000)
             case (ashi_rindx)
  
                 // Allow a read from any valid register                
+                REG_PACKET_COUNTH:
+                    begin
+                        ashi_rdata     <= PACKET_COUNT[63:32];
+                        PACKET_COUNT_L <= PACKET_COUNT[31:00];
+                    end
+                
+                REG_PACKETS_SENT1H:
+                    begin
+                        ashi_rdata     <= packets_out1[63:32];
+                        packets_out1_L <= packets_out1[31:00];
+                    end
+
+                REG_PACKETS_SENT2H:
+                    begin
+                        ashi_rdata     <= packets_out2[63:32];
+                        packets_out2_L <= packets_out2[31:00];
+                    end
+
+                REG_PACKETS_RCVD1H:
+                    begin
+                        ashi_rdata    <= packets_in1[63:32];
+                        packets_in1_L <= packets_in1[31:00];
+                    end
+
+                REG_PACKETS_RCVD2H:
+                    begin
+                        ashi_rdata    <= packets_in2[63:32];
+                        packets_in2_L <= packets_in2[31:00];
+                    end
+
                 REG_MODULE_REV:         ashi_rdata <= MODULE_VERSION;
                 REG_STATUS:             ashi_rdata <= {halted, busy};
                 REG_CYCLES_PER_PACKET:  ashi_rdata <= CYCLES_PER_PACKET;
-                REG_PACKET_COUNTH:      ashi_rdata <= PACKET_COUNT[63:32];
-                REG_PACKET_COUNTL:      ashi_rdata <= PACKET_COUNT[31:00];
-                REG_PACKETS_SENT1H:     ashi_rdata <= packets_out1[63:32];
-                REG_PACKETS_SENT1L:     ashi_rdata <= packets_out1[31:00];
-                REG_PACKETS_SENT2H:     ashi_rdata <= packets_out2[63:32];
-                REG_PACKETS_SENT2L:     ashi_rdata <= packets_out2[31:00];
-                REG_PACKETS_RCVD1H:     ashi_rdata <= packets_in1 [63:32];
-                REG_PACKETS_RCVD1L:     ashi_rdata <= packets_in1 [31:00];
-                REG_PACKETS_RCVD2H:     ashi_rdata <= packets_in2 [63:32];
-                REG_PACKETS_RCVD2L:     ashi_rdata <= packets_in2 [31:00];
+                REG_PACKET_COUNTL:      ashi_rdata <= PACKET_COUNT_L;
+                REG_PACKETS_SENT1L:     ashi_rdata <= packets_out1_L;
+                REG_PACKETS_SENT2L:     ashi_rdata <= packets_out2_L;
+                REG_PACKETS_RCVD1L:     ashi_rdata <= packets_in1_L;
+                REG_PACKETS_RCVD2L:     ashi_rdata <= packets_in2_L;
                 REG_ERRORS1:            ashi_rdata <= errors1;
                 REG_ERRORS2:            ashi_rdata <= errors2;
                 REG_ETH_STATUS:         ashi_rdata <= eth_status;
@@ -326,6 +369,8 @@ module cabletest_ctl # (parameter DEFAULT_TXPRE = 5'h00, CLK_HZ = 250000000)
                 REG_RESET:              ashi_rdata <= (resetn_out == 0);
                 REG_RSFEC:              ashi_rdata <= RSFEC_ENABLE;
                 REG_TXPRE:              ashi_rdata <= CMAC_TXPRE;
+                REG_TXPOST:             ashi_rdata <= CMAC_TXPOST;
+                REG_TXDIFF:             ashi_rdata <= CMAC_TXDIFF;
                 
                 // Reads of any other register are a decode-error
                 default: ashi_rresp <= DECERR;
