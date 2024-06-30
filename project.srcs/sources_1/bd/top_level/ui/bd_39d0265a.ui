@@ -28,6 +28,8 @@ preplace inst smartconnect -pg 1 -lvl 3 -x 880 -y 710 -swap {104 1 2 3 4 5 6 7 8
 preplace inst status_leds -pg 1 -lvl 6 -x 2010 -y 270 -swap {1 0 2 3} -defaultsOSRD -pinDir qsfp0_up left -pinY qsfp0_up 20L -pinDir qsfp1_up left -pinY qsfp1_up 0L -pinBusDir led_green_l right -pinBusY led_green_l 0R -pinBusDir led_orange_l right -pinBusY led_orange_l 20R
 preplace inst qsfp_control -pg 1 -lvl 6 -x 2010 -y 720 -swap {0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 22 20 21} -defaultsOSRD -pinDir S_AXI left -pinY S_AXI 0L -pinDir clk left -pinY clk 20L -pinDir resetn left -pinY resetn 40L -pinBusDir async_qsfp_present_l right -pinBusY async_qsfp_present_l 40R -pinBusDir qsfp_rst_l right -pinBusY qsfp_rst_l 0R -pinBusDir qsfp_lp right -pinBusY qsfp_lp 20R
 preplace inst axi_revision -pg 1 -lvl 4 -x 1250 -y 780 -defaultsOSRD -pinDir S_AXI left -pinY S_AXI 0L -pinDir AXI_ACLK left -pinY AXI_ACLK 20L -pinDir AXI_ARESETN left -pinY AXI_ARESETN 40L
+preplace netloc cabletest_CMAC_TXDIFF 1 2 3 640J 550 NJ 550 1440
+preplace netloc cabletest_CMAC_TXPOST 1 2 3 660J 570 1040J 590 1500
 preplace netloc cabletest_CMAC_TXPRE 1 2 3 700J 610 NJ 610 N
 preplace netloc cabletest_RSFEC_ENABLE 1 2 3 620J 530 1080J 630 1540
 preplace netloc cabletest_resetn_out 1 2 3 580 430 1100J 570 1460J
@@ -47,8 +49,6 @@ preplace netloc source_200Mhz_clk 1 1 5 300 960 720 630 1060 680 NJ 680 1820J
 preplace netloc source_200Mhz_resetn 1 1 5 320 980 740 650 1020 700 1480 760 NJ
 preplace netloc status_leds_led_green_l 1 6 1 N 270
 preplace netloc status_leds_led_orange_l 1 6 1 N 290
-preplace netloc cabletest_CMAC_TXDIFF 1 2 3 640J 550 NJ 550 1440
-preplace netloc cabletest_CMAC_TXPOST 1 2 3 660J 570 1040J 590 1500
 preplace netloc AXIS_IN_0_1 1 2 2 NJ 370 NJ
 preplace netloc AXIS_IN_1_1 1 2 2 NJ 350 NJ
 preplace netloc cabletest_AXIS_OUT_0 1 2 2 NJ 390 NJ
@@ -71,8 +71,8 @@ preplace netloc xdma_0_pcie_mgt 1 0 1 NJ 920
 levelinfo -pg 1 0 160 450 880 1250 1670 2010 2200
 pagesize -pg 1 -db -bbox -sgen -130 0 2390 1050
 ",
-   "No Loops_ScaleFactor":"0.477119",
-   "No Loops_TopLeft":"-126,-195",
+   "No Loops_ScaleFactor":"0.499801",
+   "No Loops_TopLeft":"-126,-162",
    "guistr":"# # String gsaved with Nlview 7.0r4  2019-12-20 bk=1.5203 VDI=41 GEI=36 GUI=JA:10.0 TLS
 #  -string -flagsOSRD
 preplace port port-id_clk -pg 1 -lvl 0 -x -10 -y 60 -defaultsOSRD

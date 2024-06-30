@@ -15,6 +15,12 @@ set_property BITSTREAM.CONFIG.SPI_FALL_EDGE YES [current_design]
 ##########      Clocks/Reset        ##########
 ##############################################
 
+#
+# Presume the clocks have 300ps of jitter to force place&route to allow more margin on timing
+#
+set_system_jitter 0.300
+
+
 
 #
 # 100 MHz system clock
