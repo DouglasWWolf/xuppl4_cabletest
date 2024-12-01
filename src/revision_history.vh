@@ -16,14 +16,16 @@
 // 16-Jun-2024  1.5.0  DWW  Added programmable gt_txpostcursor and gt_txdiffctrl
 //
 // 30-Jun-2024  1.5.1  DWW  Set SYSTEM_JITTER to 300ps to tighten up timing
+//
+// 29-Nov-2024  1.6.0  DWW  Added ILAs on the CMAC tx and rx streams
 //================================================================================================
 localparam VERSION_MAJOR = 1;
-localparam VERSION_MINOR = 5;
-localparam VERSION_BUILD = 1;
+localparam VERSION_MINOR = 6;
+localparam VERSION_BUILD = 0;
 localparam VERSION_RCAND = 0;
 
-localparam VERSION_DAY   = 30;
-localparam VERSION_MONTH = 6;
+localparam VERSION_DAY   = 29;
+localparam VERSION_MONTH = 11;
 localparam VERSION_YEAR  = 2024;
 
 localparam RTL_TYPE      = 741776;

@@ -5,6 +5,8 @@
 //   Date     Who   Ver  Changes
 //====================================================================================
 // 04-Dec-23  DWW     1  Initial creation
+//
+// 29-Dec-24  DWW     2  Registered the BYTES_PER_USEC input port
 //====================================================================================
 
 /*
@@ -42,8 +44,12 @@ module rate_limiter #
     input [31:0]        BYTES_PER_USEC
 );
 
+// Make timing a little easier by registering the BYTES_PER_USEC input
+reg[31:0] r_BYTES_PER_USEC;
+always @(posedge clk) r_BYTES_PER_USEC <= BYTES_PER_USEC;
+
 // Define the number of data-cycle-transfers allowed per microsecond
-wire[15:0] max_xfers_per_usec = BYTES_PER_USEC / (DW/8);
+wire[15:0] max_xfers_per_usec = r_BYTES_PER_USEC / (DW/8);
 
 // Clock-cycle number, cycles continuously from 1 to CLOCKS_PER_USEC
 reg [15:0] cycle_count;
