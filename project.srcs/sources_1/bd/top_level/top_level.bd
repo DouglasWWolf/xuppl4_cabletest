@@ -4742,7 +4742,7 @@
             "parameters": {
               "DATA_WIDTH": {
                 "value": "32",
-                "value_src": "auto"
+                "value_src": "constant"
               },
               "PROTOCOL": {
                 "value": "AXI4LITE",
@@ -4757,8 +4757,8 @@
                 "value_src": "constant"
               },
               "ADDR_WIDTH": {
-                "value": "5",
-                "value_src": "auto"
+                "value": "7",
+                "value_src": "constant"
               },
               "AWUSER_WIDTH": {
                 "value": "0",
@@ -4853,7 +4853,7 @@
               "AWADDR": {
                 "physical_name": "S_AXI_AWADDR",
                 "direction": "I",
-                "left": "4",
+                "left": "6",
                 "right": "0"
               },
               "AWPROT": {
@@ -4907,7 +4907,7 @@
               "ARADDR": {
                 "physical_name": "S_AXI_ARADDR",
                 "direction": "I",
-                "left": "4",
+                "left": "6",
                 "right": "0"
               },
               "ARPROT": {
